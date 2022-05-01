@@ -13,20 +13,20 @@ class ScriptArgs:
         self.__ArgParser = ArgumentParser()
         self.degree: int = ...
         self.no_color: bool = ...
-        self.no_sub: bool = ...
+        self.no_superscript: bool = ...
         self.__parse_args()
 
     def __parse_args(self):
         # Add args
         self.__ArgParser.add_argument('degree', type=self.check_degree)
-        self.__ArgParser.add_argument('--no-color', action='store_true')
-        self.__ArgParser.add_argument('--no-sub', action='store_true')
+        self.__ArgParser.add_argument('--no-color', action='store_true', help='Remove color highlighting')
+        self.__ArgParser.add_argument('--no-superscript', action='store_true', help='Remove superscript symbols')
 
         # Parse args
         args = self.__ArgParser.parse_args()
         self.degree = args.degree
         self.no_color = args.no_color
-        self.no_sub = args.no_sub
+        self.no_superscript = args.no_sub
 
     @staticmethod
     def check_degree(value) -> int:
@@ -41,7 +41,7 @@ class ScriptArgs:
 
 def main():
     args = ScriptArgs()
-    generator = PascalTriangleGenerator(no_sub=args.no_sub)
+    generator = PascalTriangleGenerator(no_superscript=args.no_superscript)
     print(generator.get_formula_by_degree(args.degree, add_color=not args.no_color))
 
 

@@ -7,12 +7,12 @@ FORE = colorama.Fore
 
 
 class PascalTriangleGenerator:
-    def __init__(self, no_sub: bool = False):
+    def __init__(self, no_superscript: bool = False):
         self.__triangle = [
             [1],
             [1, 1],
         ]
-        self.__no_sub = no_sub
+        self.__no_superscript = no_superscript
         self.__str_coefficients_mapping = '⁰¹²³⁴⁵⁶⁷⁸⁹'
 
     @property
@@ -23,11 +23,11 @@ class PascalTriangleGenerator:
     def triangle(self) -> List[List[int]]:
         return self.__triangle.copy()
 
-    def __get_sub_degree(self, degree: int, empty_if_lt_1: bool = True) -> str:
+    def __get_degree(self, degree: int, empty_if_lt_1: bool = True) -> str:
         result = f''
         if empty_if_lt_1 and (degree <= 1):
             return result
-        if self.__no_sub:
+        if self.__no_superscript:
             return f'^{degree}'
         for i in str(degree):
             result += self.__str_coefficients_mapping[int(i)]
@@ -47,7 +47,7 @@ class PascalTriangleGenerator:
 
         # Generate formula
         result = f'({FORE.GREEN if add_color else ""}a{FORE.RESET} - {FORE.BLUE if add_color else ""}b{FORE.RESET})' \
-                 f'{self.__get_sub_degree(degree, add_color)} = '
+                 f'{self.__get_degree(degree, add_color)} = '
         a_degree = degree
         b_degree = 0
         curr_sign = '-'
@@ -58,9 +58,9 @@ class PascalTriangleGenerator:
 
             # a and b degrees
             if a_degree > 0:
-                temp += f'{FORE.GREEN if add_color else ""}a{FORE.RESET}' + self.__get_sub_degree(a_degree, add_color)
+                temp += f'{FORE.GREEN if add_color else ""}a{FORE.RESET}' + self.__get_degree(a_degree, add_color)
             if b_degree > 0:
-                temp += f'{FORE.BLUE if add_color else ""}b{FORE.RESET}' + self.__get_sub_degree(b_degree, add_color)
+                temp += f'{FORE.BLUE if add_color else ""}b{FORE.RESET}' + self.__get_degree(b_degree, add_color)
             a_degree -= 1
             b_degree += 1
 
