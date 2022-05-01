@@ -9,6 +9,9 @@ MAX_DEGREE = 100
 
 
 class ScriptArgs:
+    """
+    Class for parsing cmd arguments
+    """
     def __init__(self):
         self.__ArgParser = ArgumentParser()
         self.degree: int = ...
@@ -30,6 +33,13 @@ class ScriptArgs:
 
     @staticmethod
     def check_degree(value) -> int:
+        """
+        Method to check degree arg
+
+        :param value: Argument value
+
+        :return: int(value)
+        """
         try:
             value = int(value)
         except ValueError as error:
